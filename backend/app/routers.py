@@ -96,11 +96,11 @@ async def create_product(
 
 
 @products_router.delete(
-    "/{product_id}", status_code=status.HTTP_204_NO_CONTENT
+    "/{product_id}", status_code=status.HTTP_200_OK
 )
 async def delete_product(
     product_id: int, db: AsyncSession = Depends(get_db)
-) -> None:
+) -> dict[str, str]:
     result = await db.execute(
         select(models.Product).where(
             models.Product.id == product_id,
@@ -116,7 +116,7 @@ async def delete_product(
 
     await db.delete(product)
     await db.commit()
-    return None
+    return {"detail": "Ürün başarıyla silindi."}
 
 
 @tables_router.get("/", response_model=list[schemas.Table])
