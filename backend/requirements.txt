@@ -1,7 +1,10 @@
-fastapi
-uvicorn[standard]
-sqlalchemy
-asyncpg
-psycopg2-binary
-python-dotenv
-python-multipart
+# SmartStock API — Railway / Railpack uyumlu bağımlılıklar
+# Python 3.11+ önerilir
+
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sqlalchemy==2.0.36
+asyncpg==0.30.0
+python-dotenv==1.0.1
+python-multipart==0.0.17
+pydantic==2.10.3
