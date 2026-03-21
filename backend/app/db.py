@@ -20,15 +20,19 @@ class Base(DeclarativeBase):
     pass
 
 
-raw_url = os.getenv(
+# Railway ve canlı ortam: DATABASE_URL ortam değişkeninden okunur.
+# Lokal geliştirme: .env veya aşağıdaki varsayılan.
+DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql://postgres:postgres@localhost:5432/smartstock",
 )
 
-if raw_url.startswith("postgresql://") and "+asyncpg" not in raw_url:
-    DATABASE_URL = raw_url.replace("postgresql://", "postgresql+asyncpg://", 1)
-else:
-    DATABASE_URL = raw_url
+# Railway varsayılanı postgresql://; SQLAlchemy async motoru asyncpg için +asyncpg şeması ister.
+if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+elif DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    # Bazı sağlayıcılar kısa postgres:// kullanır
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
 
 engine = create_async_engine(
     DATABASE_URL,
