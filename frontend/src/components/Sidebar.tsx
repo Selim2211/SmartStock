@@ -16,6 +16,8 @@ import {
   PlusCircle,
   Sun,
   Moon,
+  Menu,
+  X,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -98,10 +100,25 @@ export function Sidebar() {
   const pathname = usePathname();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (mobileOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [mobileOpen]);
 
   const isDark = resolvedTheme === "dark" || theme === "dark";
   const isLight = mounted && !isDark;
@@ -117,141 +134,195 @@ export function Sidebar() {
   const mutedText = isLight ? "text-espresso/70" : "text-espresso-muted";
 
   return (
-    <aside
-      className={`fixed inset-y-0 left-0 z-40 w-72 border-r ${shell}`}
-    >
-      <div
-        className={`flex h-16 items-center justify-between gap-2 border-b px-4 backdrop-blur ${headerBar}`}
+    <>
+      {/* Mobil: menü aç */}
+      <button
+        type="button"
+        onClick={() => setMobileOpen(true)}
+        className={`fixed left-3 top-[max(0.75rem,env(safe-area-inset-top))] z-[120] flex h-11 w-11 touch-manipulation items-center justify-center rounded-xl border shadow-md transition active:scale-[0.98] lg:hidden ${
+          isLight
+            ? "border-espresso-border bg-white/95 text-espresso shadow-black/10"
+            : "border-espresso-border bg-espresso-surface text-espresso-cream shadow-black/30"
+        }`}
+        aria-expanded={mobileOpen}
+        aria-controls="app-sidebar"
+        aria-label="Menüyü aç"
       >
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-espresso-latte shadow-lg shadow-black/20">
-            <span className="text-lg font-black tracking-tight text-white">
-              SS
-            </span>
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span className={`text-sm font-semibold tracking-wide ${isLight ? "text-espresso" : "text-espresso-cream"}`}>
-              SmartStock
-            </span>
-            <span className={`text-[11px] font-medium uppercase tracking-[0.22em] ${mutedText}`}>
-              POS &amp; Kafe Yönetimi
-            </span>
-          </div>
-        </div>
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {/* Mobil: arka plan */}
+      {mobileOpen && (
         <button
           type="button"
-          onClick={() => setTheme(isDark ? "light" : "dark")}
-          className={`inline-flex h-8 w-8 items-center justify-center rounded-full border text-sm shadow-sm transition ${
-            isLight
-              ? "border-espresso-border bg-white/80 text-espresso hover:bg-white"
-              : "border-espresso-border bg-espresso-surface text-espresso-cream hover:bg-espresso-surface/80"
-          }`}
-          suppressHydrationWarning
+          className="fixed inset-0 z-[100] cursor-default bg-black/60 backdrop-blur-sm lg:hidden"
+          aria-label="Menüyü kapat"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      <aside
+        id="app-sidebar"
+        data-mobile-open={mobileOpen ? "true" : "false"}
+        className={`fixed inset-y-0 left-0 z-[110] flex h-full w-[min(20rem,100vw)] max-w-[100vw] flex-col border-r shadow-2xl sm:w-80 ${shell}`}
+      >
+        <div
+          className={`flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4 backdrop-blur ${headerBar}`}
         >
-          {mounted ? (
-            isDark ? (
-              <Sun className="h-4 w-4" />
-            ) : (
-              <Moon className="h-4 w-4" />
-            )
-          ) : (
-            <span className="inline-block h-4 w-4" aria-hidden />
-          )}
-        </button>
-      </div>
-
-      <nav className="mt-4 flex flex-col gap-1 px-3">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-          const isActive =
-            item.href === "/"
-              ? pathname === "/"
-              : pathname?.startsWith(item.href);
-
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={[
-                "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-espresso-latte focus-visible:ring-offset-2",
-                isLight ? "focus-visible:ring-offset-[#EDE4D3]" : "focus-visible:ring-offset-espresso-sidebar",
-                isActive
-                  ? "bg-espresso-latte text-white shadow-lg shadow-black/25 hover:bg-espresso-latte-dark"
-                  : isLight
-                  ? "text-espresso/90 hover:bg-black/5"
-                  : "text-espresso-cream hover:bg-espresso-surface/80",
-              ].join(" ")}
-            >
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-espresso-latte shadow-lg shadow-black/20">
+              <span className="text-lg font-black tracking-tight text-white">
+                SS
+              </span>
+            </div>
+            <div className="min-w-0 flex flex-col leading-tight">
               <span
+                className={`truncate text-sm font-semibold tracking-wide ${isLight ? "text-espresso" : "text-espresso-cream"}`}
+              >
+                SmartStock
+              </span>
+              <span
+                className={`text-[10px] font-medium uppercase tracking-[0.18em] sm:text-[11px] sm:tracking-[0.22em] ${mutedText}`}
+              >
+                POS &amp; Kafe Yönetimi
+              </span>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className={`inline-flex h-9 w-9 touch-manipulation items-center justify-center rounded-full border text-sm shadow-sm transition ${
+                isLight
+                  ? "border-espresso-border bg-white/80 text-espresso hover:bg-white"
+                  : "border-espresso-border bg-espresso-surface text-espresso-cream hover:bg-espresso-surface/80"
+              }`}
+              suppressHydrationWarning
+              aria-label={isDark ? "Açık tema" : "Koyu tema"}
+            >
+              {mounted ? (
+                isDark ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )
+              ) : (
+                <span className="inline-block h-4 w-4" aria-hidden />
+              )}
+            </button>
+            <button
+              type="button"
+              className="flex h-9 w-9 touch-manipulation items-center justify-center rounded-full border border-transparent text-espresso-muted transition hover:bg-black/10 dark:hover:bg-white/10 lg:hidden"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Menüyü kapat"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <nav className="mt-2 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain px-3 pb-2 pt-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(item.href);
+
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
                 className={[
-                  "flex h-8 w-8 items-center justify-center rounded-lg border text-[15px]",
+                  "group flex min-h-[48px] touch-manipulation items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all active:scale-[0.99]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-espresso-latte focus-visible:ring-offset-2",
+                  isLight
+                    ? "focus-visible:ring-offset-[#EDE4D3]"
+                    : "focus-visible:ring-offset-espresso-sidebar",
                   isActive
-                    ? "border-white/25 bg-white/10 text-white"
+                    ? "bg-espresso-latte text-white shadow-lg shadow-black/25 hover:bg-espresso-latte-dark"
                     : isLight
-                    ? "border-espresso-border/50 bg-white/50 group-hover:border-espresso-latte/40"
-                    : "border-espresso-border bg-espresso-surface/60 group-hover:border-espresso-latte/50",
+                      ? "text-espresso/90 hover:bg-black/5"
+                      : "text-espresso-cream hover:bg-espresso-surface/80",
                 ].join(" ")}
               >
-                <Icon
-                  className={
-                    isActive
-                      ? "h-4 w-4 text-white"
-                      : isLight
-                      ? "h-4 w-4 text-espresso/80"
-                      : "h-4 w-4 text-espresso-cream"
-                  }
-                />
-              </span>
-              <span className="flex-1 text-left">{item.label}</span>
-
-              {!isActive && (
                 <span
-                  className={`h-1.5 w-1.5 rounded-full ${
-                    isLight ? "bg-espresso/25 group-hover:bg-espresso-latte" : "bg-espresso-border group-hover:bg-espresso-latte"
-                  }`}
-                />
-              )}
+                  className={[
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border text-[15px]",
+                    isActive
+                      ? "border-white/25 bg-white/10 text-white"
+                      : isLight
+                        ? "border-espresso-border/50 bg-white/50 group-hover:border-espresso-latte/40"
+                        : "border-espresso-border bg-espresso-surface/60 group-hover:border-espresso-latte/50",
+                  ].join(" ")}
+                >
+                  <Icon
+                    className={
+                      isActive
+                        ? "h-4 w-4 text-white"
+                        : isLight
+                          ? "h-4 w-4 text-espresso/80"
+                          : "h-4 w-4 text-espresso-cream"
+                    }
+                  />
+                </span>
+                <span className="flex-1 text-left leading-snug">{item.label}</span>
 
-              {isActive && (
-                <span className="ml-1 h-7 w-1 rounded-full bg-white/35" />
-              )}
-            </Link>
-          );
-        })}
-      </nav>
+                {!isActive && (
+                  <span
+                    className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                      isLight
+                        ? "bg-espresso/25 group-hover:bg-espresso-latte"
+                        : "bg-espresso-border group-hover:bg-espresso-latte"
+                    }`}
+                  />
+                )}
 
-      <div
-        className={`mt-auto flex flex-col gap-2 border-t px-4 pb-4 pt-3 ${
-          isLight ? "border-espresso-border" : "border-espresso-border"
-        }`}
-      >
-        <div className={`flex items-center justify-between text-[11px] ${mutedText}`}>
-          <span className="uppercase tracking-[0.18em]">Aktif Şube</span>
-          <span
-            className={`rounded-full px-2 py-0.5 text-[10px] font-medium shadow-sm ${
-              isLight
-                ? "bg-espresso-latte/15 text-espresso ring-1 ring-espresso-border"
-                : "bg-espresso-surface text-espresso-cream ring-1 ring-espresso-border"
-            }`}
-          >
-            Merkez
-          </span>
-        </div>
+                {isActive && (
+                  <span className="ml-1 h-7 w-1 shrink-0 rounded-full bg-white/35" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
         <div
-          className={`h-1.5 overflow-hidden rounded-full ${
-            isLight ? "bg-espresso-border/40" : "bg-espresso-border"
+          className={`mt-auto flex shrink-0 flex-col gap-2 border-t px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 ${
+            isLight ? "border-espresso-border" : "border-espresso-border"
           }`}
         >
-          <div className="h-full w-2/3 rounded-full bg-espresso-latte" />
+          <div
+            className={`flex items-center justify-between text-[11px] ${mutedText}`}
+          >
+            <span className="uppercase tracking-[0.18em]">Aktif Şube</span>
+            <span
+              className={`rounded-full px-2 py-0.5 text-[10px] font-medium shadow-sm ${
+                isLight
+                  ? "bg-espresso-latte/15 text-espresso ring-1 ring-espresso-border"
+                  : "bg-espresso-surface text-espresso-cream ring-1 ring-espresso-border"
+              }`}
+            >
+              Merkez
+            </span>
+          </div>
+          <div
+            className={`h-1.5 overflow-hidden rounded-full ${
+              isLight ? "bg-espresso-border/40" : "bg-espresso-border"
+            }`}
+          >
+            <div className="h-full w-2/3 rounded-full bg-espresso-latte" />
+          </div>
+          <p className={`text-[11px] ${mutedText}`}>
+            Bugünkü işlemler stabil. Satış yoğunluğu:{" "}
+            <span
+              className={`font-semibold ${isLight ? "text-espresso" : "text-espresso-cream"}`}
+            >
+              %67
+            </span>
+          </p>
         </div>
-        <p className={`text-[11px] ${mutedText}`}>
-          Bugünkü işlemler stabil. Satış yoğunluğu:{" "}
-          <span className={`font-semibold ${isLight ? "text-espresso" : "text-espresso-cream"}`}>
-            %67
-          </span>
-        </p>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

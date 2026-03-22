@@ -19,3 +19,21 @@ html.light body {
 html.light main {
   @apply bg-espresso-cream;
 }
+
+/*
+ * Mobil (<lg): menü kapalıyken sidebar tamamen gizlensin.
+ * Sadece transform (-translate-x-full) bazı ortamlarda yetersiz kalıp
+ * paneli ekranda bırakıyordu; display:none garanti eder.
+ */
+@media (max-width: 1023px) {
+  #app-sidebar[data-mobile-open="false"] {
+    display: none !important;
+  }
+}
+
+/* Mobil: güvenli alan + dokunma */
+@layer utilities {
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+}

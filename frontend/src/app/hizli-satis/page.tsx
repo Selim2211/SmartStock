@@ -122,10 +122,10 @@ export default function HizliSatisPage() {
 
   return (
     <div
-      className={`flex h-[calc(100vh-4rem)] min-h-[520px] w-full flex-col gap-0 overflow-hidden rounded-2xl border border-espresso-border shadow-xl ${panel}`}
+      className={`flex min-h-[min(100dvh,900px)] w-full min-w-0 flex-col gap-0 overflow-hidden rounded-2xl border border-espresso-border shadow-xl sm:min-h-[520px] lg:h-[calc(100vh-5rem)] ${panel}`}
     >
-      <div className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
-        <div className="flex flex-col overflow-hidden border-r border-espresso-border">
+      <div className="grid min-h-0 flex-1 grid-cols-1 overflow-hidden lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
+        <div className="flex min-h-0 min-w-0 flex-col overflow-hidden border-r border-espresso-border">
           <div className="border-b border-espresso-border px-4 py-3">
             <h1 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
               Menü / Ürünler
@@ -159,13 +159,13 @@ export default function HizliSatisPage() {
                 Bu kategoride ürün yok.
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {filteredProducts.map((p) => (
                   <button
                     key={p.id}
                     type="button"
                     onClick={() => addToCart(p)}
-                    className="group flex flex-col overflow-hidden rounded-xl border border-espresso-border bg-white/95 text-left shadow-sm transition hover:border-espresso-latte/50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-espresso-latte focus:ring-offset-2 focus:ring-offset-[#f8f3ea] dark:bg-espresso-bg/90 dark:focus:ring-offset-espresso-surface"
+                    className="group flex touch-manipulation flex-col overflow-hidden rounded-xl border border-espresso-border bg-white/95 text-left shadow-sm transition active:scale-[0.99] hover:border-espresso-latte/50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-espresso-latte focus:ring-offset-2 focus:ring-offset-[#f8f3ea] dark:bg-espresso-bg/90 dark:focus:ring-offset-espresso-surface"
                   >
                     <div className="relative aspect-square w-full overflow-hidden bg-espresso-border/25 dark:bg-espresso-bg">
                       <img
@@ -190,7 +190,7 @@ export default function HizliSatisPage() {
         </div>
 
         <div
-          className={`flex flex-col border-t border-espresso-border lg:border-t-0 lg:border-l ${panel}`}
+          className={`flex min-h-0 min-w-0 flex-col border-t border-espresso-border lg:border-t-0 lg:border-l ${panel}`}
         >
           <div className="border-b border-espresso-border px-4 py-3">
             <h2 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
@@ -203,7 +203,7 @@ export default function HizliSatisPage() {
               <div className="flex flex-col items-center justify-center gap-2 py-12 text-center text-sm text-espresso/65 dark:text-espresso-muted">
                 <div className="h-12 w-12 rounded-full border-2 border-dashed border-espresso-border" />
                 <p>Sepet boş</p>
-                <p className="text-xs">Ürün eklemek için soldan karta tıklayın.</p>
+                <p className="text-xs">Ürün eklemek için üstteki ürün kartlarına tıklayın.</p>
               </div>
             ) : (
               <ul className="space-y-2">
