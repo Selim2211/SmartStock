@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 
 const categories = ["Kahveler", "Tatlılar", "Sandviçler", "Soğuk İçecekler"];
 
@@ -64,7 +64,7 @@ export default function UrunEklePage() {
         formData.append("gorsel", file);
       }
 
-      const res = await fetch(`${API_URL}/urunler`, {
+      const res = await fetch(apiUrl("/urunler"), {
         method: "POST",
         body: formData,
       });

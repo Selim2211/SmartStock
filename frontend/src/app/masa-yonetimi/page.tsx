@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 
 type Table = {
   id: number;
@@ -23,7 +23,7 @@ export default function MasaYonetimiPage() {
   async function fetchTables() {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/masalar`);
+      const res = await fetch(apiUrl("/masalar"));
       if (!res.ok) {
         throw new Error("Masalar alınırken hata oluştu");
       }
@@ -58,7 +58,7 @@ export default function MasaYonetimiPage() {
 
     try {
       setSubmitting(true);
-      const res = await fetch(`${API_URL}/masalar`, {
+      const res = await fetch(apiUrl("/masalar"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

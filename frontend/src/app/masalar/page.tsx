@@ -2,29 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { ensureHttpsUnlessLocal } from "@/lib/api";
-
-/** Masalar: Mixed Content kaçağı önlemi — varsayılan ve env her zaman HTTPS (localhost hariç) */
-const API_URL = (() => {
-  const raw =
-    process.env.NEXT_PUBLIC_API_URL ||
-    "https://smartstock-production-49c7.up.railway.app/api";
-  let u = raw.trim().replace(/\/+$/, "");
-  if (u.startsWith("http://")) {
-    const host = u.slice("http://".length).split("/")[0] ?? "";
-    const isLocal =
-      host.startsWith("127.0.0.1") || host.startsWith("localhost");
-    if (!isLocal) {
-      u = `https://${u.slice("http://".length)}`;
-    }
-  }
-  if (u.includes("up.railway.app") && u.startsWith("http://")) {
-    u = `https://${u.slice("http://".length)}`;
-  }
-  return u;
-})();
-
-const API_ORIGIN = API_URL.replace(/\/api\/?$/, "");
+import { API_ORIGIN, apiUrl, ensureHttpsUnlessLocal } from "@/lib/api";
 
 type OrderItemLine = {
   id: number;
@@ -71,8 +49,8 @@ export default function MasalarPage() {
     try {
       setError(null);
       const [tRes, pRes] = await Promise.all([
-        fetch(API_URL + "/tables"),
-        fetch(API_URL + "/urunler"),
+        fetch(apiUrl("/tables")),
+        fetch(apiUrl("/urunler")),
       ]);
       if (!tRes.ok) throw new Error("Masalar yüklenemedi.");
       if (!pRes.ok) throw new Error("Ürünler yüklenemedi.");
@@ -91,7 +69,7 @@ export default function MasalarPage() {
   }, [fetchAll]);
 
   const refreshTables = useCallback(async () => {
-    const tRes = await fetch(API_URL + "/tables");
+    const tRes = await fetch(apiUrl("/tables"));
     if (!tRes.ok) return;
     const data = (await tRes.json()) as TableResponse[];
     setTables(data);
@@ -117,7 +95,7 @@ export default function MasalarPage() {
     try {
       setActionLoading(true);
       const res = await fetch(
-        API_URL + "/tables/" + modalTable.id + "/add_item",
+        apiUrl(`/tables/${modalTable.id}/add_item`),
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -142,7 +120,7 @@ export default function MasalarPage() {
     if (!modalTable || actionLoading) return;
     try {
       setActionLoading(true);
-      const res = await fetch(API_URL + "/tables/" + modalTable.id + "/checkout", {
+      const res = await fetch(apiUrl(`/tables/${modalTable.id}/checkout`), {
         method: "POST",
       });
       if (!res.ok) {

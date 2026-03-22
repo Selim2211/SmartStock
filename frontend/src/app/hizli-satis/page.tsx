@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { API_ORIGIN, API_URL, ensureHttpsUnlessLocal } from "@/lib/api";
+import { API_ORIGIN, apiUrl, ensureHttpsUnlessLocal } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -39,7 +39,7 @@ export default function HizliSatisPage() {
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/urunler`);
+      const res = await fetch(apiUrl("/urunler"));
       if (!res.ok) throw new Error("Ürünler yüklenemedi.");
       const data = (await res.json()) as Product[];
       setProducts(data);

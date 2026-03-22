@@ -3,12 +3,19 @@
  * https://smartstock-production-49c7.up.railway.app/api
  * Lokal: http://127.0.0.1:8000/api
  */
-const raw =
-  process.env.NEXT_PUBLIC_API_URL ||
+const FALLBACK_API =
   "https://smartstock-production-49c7.up.railway.app/api";
 
+/**
+ * Ortam değişkeni veya eski kodda kalmış http://smartstock... ifadelerini
+ * kesin olarak https ile değiştirir (Mixed Content).
+ */
+function forceHttpsSmartstock(url: string): string {
+  return url.replace(/http:\/\/smartstock/gi, "https://smartstock");
+}
+
 function normalizeApiBase(url: string): string {
-  let u = url.trim().replace(/\/+$/, "");
+  let u = forceHttpsSmartstock(url).trim().replace(/\/+$/, "");
   // Mixed content: Vercel'de yanlışlıkla http:// yazılmış production URL'lerini https yap
   if (u.startsWith("http://")) {
     const host = u.slice("http://".length).split("/")[0] ?? "";
@@ -25,8 +32,23 @@ function normalizeApiBase(url: string): string {
   return u;
 }
 
+const raw = normalizeApiBase(
+  process.env.NEXT_PUBLIC_API_URL || FALLBACK_API
+);
+
 /** Sonunda / olmadan, /api ile biten API kökü */
-export const API_URL = normalizeApiBase(raw);
+export const API_URL = raw;
+
+/**
+ * API kökü + yol. Path sonundaki gereksiz / kaldırılır (FastAPI 307 önlemi).
+ * Ör: apiUrl("/urunler")
+ */
+export function apiUrl(path: string): string {
+  let p = path.trim();
+  if (!p.startsWith("/")) p = `/${p}`;
+  p = p.replace(/\/+$/, "");
+  return `${API_URL}${p}`;
+}
 
 /** /uploads gibi /api dışı yollar için backend kökü */
 export const API_ORIGIN = API_URL.replace(/\/api\/?$/, "");
@@ -36,10 +58,11 @@ export const API_ORIGIN = API_URL.replace(/\/api\/?$/, "");
  * Localhost/127.0.0.1 hariç http → https.
  */
 export function ensureHttpsUnlessLocal(url: string): string {
-  if (!url.startsWith("http://")) return url;
-  const host = url.slice("http://".length).split("/")[0] ?? "";
+  let u = forceHttpsSmartstock(url);
+  if (!u.startsWith("http://")) return u;
+  const host = u.slice("http://".length).split("/")[0] ?? "";
   const isLocal =
     host.startsWith("127.0.0.1") || host.startsWith("localhost");
-  if (isLocal) return url;
-  return `https://${url.slice("http://".length)}`;
+  if (isLocal) return u;
+  return `https://${u.slice("http://".length)}`;
 }

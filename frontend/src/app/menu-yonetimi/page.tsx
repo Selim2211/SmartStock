@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
-import { API_ORIGIN, API_URL, ensureHttpsUnlessLocal } from "@/lib/api";
+import { API_ORIGIN, apiUrl, ensureHttpsUnlessLocal } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -20,7 +20,7 @@ export default function MenuYonetimiPage() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/urunler`);
+      const res = await fetch(apiUrl("/urunler"));
       if (!res.ok) {
         throw new Error("Ürün listesi alınırken hata oluştu");
       }
@@ -41,7 +41,7 @@ export default function MenuYonetimiPage() {
   async function deleteProduct(id: number) {
     try {
       setError(null);
-      const res = await fetch(`${API_URL}/urunler/${id}`, {
+      const res = await fetch(apiUrl(`/urunler/${id}`), {
         method: "DELETE",
       });
       if (!res.ok) {
