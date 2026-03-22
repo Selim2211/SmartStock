@@ -8,6 +8,14 @@ body {
 }
 
 body {
-  @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-50;
+  @apply bg-espresso text-espresso-cream antialiased;
 }
 
+/* Açık tema: sıcak krem kağıt (Reserve mağaza kartı hissi) */
+html.light body {
+  @apply bg-espresso-cream text-espresso;
+}
+
+html.light main {
+  @apply bg-espresso-cream;
+}

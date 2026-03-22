@@ -96,20 +96,23 @@ export default function MasaYonetimiPage() {
     reserved: "Rezerve",
   };
 
+  const cardShell =
+    "rounded-2xl border border-espresso-border bg-[#f8f3ea] p-6 shadow-sm dark:bg-espresso-surface/90 dark:shadow-[0_0_40px_rgba(0,0,0,0.35)]";
+
   return (
     <div className="space-y-8">
       <header className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <h1 className="text-2xl font-semibold text-espresso dark:text-espresso-cream">
             Masa Yönetimi
           </h1>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-espresso/75 dark:text-espresso-muted">
             Salon, bahçe ve teras masalarını tek ekran üzerinden yönetin.
           </p>
         </div>
 
         {toast && (
-          <div className="rounded-xl bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-200 ring-1 ring-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.45)]">
+          <div className="rounded-xl bg-emerald-800/20 px-4 py-2 text-xs font-medium text-emerald-100 ring-1 ring-emerald-600/40">
             {toast}
           </div>
         )}
@@ -121,27 +124,25 @@ export default function MasaYonetimiPage() {
         </div>
       )}
 
-      {/* Yeni Masa Ekle Formu */}
-      <section className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-6 shadow-[0_0_40px_rgba(0,0,0,0.6)] backdrop-blur">
+      <section className={cardShell}>
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-zinc-50">
+            <h2 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
               Yeni Masa Ekle
             </h2>
-            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-xs text-espresso/70 dark:text-espresso-muted">
               Bahçe, salon veya terastaki masalarınızı isimlendirerek kapasite
               bilgileriyle birlikte kaydedin.
             </p>
           </div>
-      </div>
+        </div>
 
         <form
           className="grid gap-5 md:grid-cols-[2fr,1fr,auto]"
           onSubmit={handleSubmit}
         >
-          {/* Masa Adı */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium uppercase tracking-[0.16em] text-zinc-400">
+            <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
               Masa Adı / Numarası
             </label>
             <input
@@ -149,13 +150,12 @@ export default function MasaYonetimiPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Örn: Bahçe-1, Salon-5"
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50"
+              className="w-full rounded-xl border border-espresso-border bg-white/90 px-3 py-2.5 text-sm text-espresso placeholder-espresso/40 shadow-inner outline-none transition hover:border-espresso-latte/50 focus:border-espresso-latte focus:ring-2 focus:ring-espresso-latte/40 dark:bg-espresso-bg/80 dark:text-espresso-cream dark:placeholder-espresso-muted"
             />
           </div>
 
-          {/* Kapasite */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium uppercase tracking-[0.16em] text-zinc-400">
+            <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
               Kapasite (Kişi)
             </label>
             <input
@@ -165,17 +165,16 @@ export default function MasaYonetimiPage() {
               onChange={(e) =>
                 setCapacity(e.target.value === "" ? "" : Number(e.target.value))
               }
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50"
+              className="w-full rounded-xl border border-espresso-border bg-white/90 px-3 py-2.5 text-sm text-espresso placeholder-espresso/40 shadow-inner outline-none transition hover:border-espresso-latte/50 focus:border-espresso-latte focus:ring-2 focus:ring-espresso-latte/40 dark:bg-espresso-bg/80 dark:text-espresso-cream dark:placeholder-espresso-muted"
               placeholder="Örn: 4"
             />
           </div>
 
-          {/* Kaydet butonu */}
           <div className="flex items-end justify-end">
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+              className="inline-flex items-center gap-2 rounded-xl bg-espresso-latte px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 transition hover:bg-espresso-latte-dark disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-espresso-latte focus-visible:ring-offset-2 focus-visible:ring-offset-[#f8f3ea] dark:focus-visible:ring-offset-espresso-surface"
             >
               {submitting ? "Kaydediliyor..." : "Masayı Kaydet"}
             </button>
@@ -183,20 +182,19 @@ export default function MasaYonetimiPage() {
         </form>
       </section>
 
-      {/* Masa Grid Görünümü */}
-      <section className="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-[0_0_35px_rgba(0,0,0,0.6)]">
+      <section className={cardShell}>
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-zinc-50">
+            <h2 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
               Mevcut Masalar
             </h2>
-            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-xs text-espresso/70 dark:text-espresso-muted">
               Masalara hızlıca durum atayın, düzenleyin veya sistemden kaldırın.
             </p>
           </div>
-          <span className="rounded-full bg-zinc-900 px-3 py-1 text-xs text-zinc-400 ring-1 ring-zinc-800">
+          <span className="rounded-full border border-espresso-border bg-white/80 px-3 py-1 text-xs text-espresso/75 dark:bg-espresso-bg dark:text-espresso-muted">
             Toplam masa:{" "}
-            <span className="font-semibold text-zinc-100">
+            <span className="font-semibold text-espresso dark:text-espresso-cream">
               {tables.length}
             </span>
           </span>
@@ -204,11 +202,11 @@ export default function MasaYonetimiPage() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {loading ? (
-            <div className="col-span-full px-2 py-4 text-sm text-zinc-400">
+            <div className="col-span-full px-2 py-4 text-sm text-espresso/65 dark:text-espresso-muted">
               Masalar yükleniyor...
             </div>
           ) : tables.length === 0 ? (
-            <div className="col-span-full px-2 py-4 text-sm text-zinc-400">
+            <div className="col-span-full px-2 py-4 text-sm text-espresso/65 dark:text-espresso-muted">
               Henüz kayıtlı masa yok. Yukarıdan ilk masayı ekleyin.
             </div>
           ) : (
@@ -217,24 +215,24 @@ export default function MasaYonetimiPage() {
               const label = statusLabel[statusKey] ?? statusKey;
               const statusColor =
                 statusKey === "available"
-                  ? "bg-emerald-500/10 text-emerald-300 ring-emerald-500/40"
+                  ? "bg-emerald-900/30 text-emerald-200 ring-emerald-700/50"
                   : statusKey === "occupied"
-                  ? "bg-red-500/10 text-red-300 ring-red-500/40"
-                  : "bg-amber-500/10 text-amber-300 ring-amber-500/40";
+                  ? "bg-red-900/30 text-red-200 ring-red-700/50"
+                  : "bg-amber-900/30 text-amber-200 ring-amber-700/50";
 
               return (
                 <article
                   key={table.id}
-                  className="group flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/90 p-4 shadow-lg transition hover:border-indigo-500/50 hover:shadow-indigo-500/10"
+                  className="group flex flex-col justify-between rounded-2xl border border-espresso-border bg-white/90 p-4 shadow-md transition hover:border-espresso-latte/40 dark:bg-espresso-bg/90"
                 >
                   <header className="mb-4 flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-sm font-semibold text-zinc-50">
+                      <h3 className="text-sm font-semibold text-espresso dark:text-espresso-cream">
                         {table.name}
                       </h3>
-                      <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
+                      <p className="mt-0.5 text-xs text-espresso/65 dark:text-espresso-muted">
                         Kapasite:{" "}
-                        <span className="font-medium text-zinc-200 dark:text-zinc-300">
+                        <span className="font-medium text-espresso dark:text-espresso-cream">
                           {table.capacity} kişi
                         </span>
                       </p>
@@ -250,18 +248,18 @@ export default function MasaYonetimiPage() {
                     <div className="flex gap-2">
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-xl border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-[11px] font-medium text-zinc-100 transition hover:border-indigo-500/60 hover:bg-zinc-800 hover:text-indigo-200"
+                        className="inline-flex items-center rounded-xl border border-espresso-border bg-white/80 px-3 py-1.5 text-[11px] font-medium text-espresso transition hover:border-espresso-latte hover:text-espresso-latte-dark dark:bg-espresso-surface dark:text-espresso-cream dark:hover:text-espresso-cream"
                       >
                         Düzenle
                       </button>
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-xl border border-red-500/60 bg-red-500/10 px-3 py-1.5 text-[11px] font-medium text-red-200 transition hover:bg-red-500/20 hover:border-red-400"
+                        className="inline-flex items-center rounded-xl border border-red-500/50 bg-red-500/10 px-3 py-1.5 text-[11px] font-medium text-red-700 transition hover:bg-red-500/20 dark:text-red-300"
                       >
                         Sil
                       </button>
                     </div>
-                    <span className="text-[10px] text-zinc-600">
+                    <span className="text-[10px] text-espresso/45 dark:text-espresso-muted">
                       ID: {table.id.toString().padStart(3, "0")}
                     </span>
                   </footer>
@@ -274,4 +272,3 @@ export default function MasaYonetimiPage() {
     </div>
   );
 }
-

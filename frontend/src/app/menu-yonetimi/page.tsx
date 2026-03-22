@@ -63,10 +63,10 @@ export default function MenuYonetimiPage() {
     <div className="space-y-8">
       <header className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <h1 className="text-2xl font-semibold text-espresso dark:text-espresso-cream">
             Menü Yönetimi
           </h1>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-espresso/75 dark:text-espresso-muted">
             Sisteme eklenmiş tüm ürünleri, görselleriyle birlikte görüntüleyin.
           </p>
         </div>
@@ -78,32 +78,30 @@ export default function MenuYonetimiPage() {
         </div>
       )}
 
-
-      {/* Ürün Listesi - Görselli Grid */}
-      <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:shadow-[0_0_35px_rgba(0,0,0,0.4)]">
+      <section className="rounded-2xl border border-espresso-border bg-[#f8f3ea] p-6 shadow-sm dark:bg-espresso-surface/90 dark:shadow-[0_0_35px_rgba(0,0,0,0.35)]">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+            <h2 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
               Menüdeki Ürünler
             </h2>
-            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-xs text-espresso/70 dark:text-espresso-muted">
               Aşağıda, veritabanında kayıtlı olan ürünler görüntülenmektedir.
             </p>
           </div>
-          <span className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-600 ring-1 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:ring-zinc-700">
+          <span className="rounded-full border border-espresso-border bg-white/80 px-3 py-1 text-xs text-espresso/80 dark:bg-espresso-surface dark:text-espresso-muted">
             Toplam ürün:{" "}
-            <span className="font-semibold text-zinc-900 dark:text-zinc-50">
+            <span className="font-semibold text-espresso dark:text-espresso-cream">
               {products.length}
             </span>
           </span>
         </div>
 
         {loading ? (
-          <div className="px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400">
+          <div className="px-4 py-6 text-sm text-espresso/60 dark:text-espresso-muted">
             Ürünler yükleniyor...
           </div>
         ) : products.length === 0 ? (
-          <div className="px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400">
+          <div className="px-4 py-6 text-sm text-espresso/60 dark:text-espresso-muted">
             Henüz kayıtlı ürün yok. Yeni ürün ekleyerek menünüzü oluşturun.
           </div>
         ) : (
@@ -118,9 +116,9 @@ export default function MenuYonetimiPage() {
               return (
                 <article
                   key={p.id}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-md transition hover:border-indigo-400/50 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-500/40"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-espresso-border bg-white shadow-md transition hover:border-espresso-latte/50 hover:shadow-lg dark:bg-espresso-surface dark:hover:border-espresso-latte/40"
                 >
-                  <div className="relative h-32 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                  <div className="relative h-32 w-full overflow-hidden bg-espresso-border/30 dark:bg-espresso-bg">
                     <img
                       src={imageUrl}
                       alt={p.name}
@@ -131,14 +129,14 @@ export default function MenuYonetimiPage() {
                       <span className="truncate font-medium drop-shadow-sm">
                         {p.name}
                       </span>
-                      <span className="rounded-full bg-black/70 px-2 py-0.5 text-[11px] text-white">
+                      <span className="rounded-full bg-black/70 px-2 py-0.5 text-[11px] text-espresso-cream">
                         {p.price.toFixed(2)} ₺
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-1 flex-col gap-3 p-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 overflow-hidden rounded-full border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                      <div className="h-10 w-10 overflow-hidden rounded-full border border-espresso-border bg-espresso-border/20 dark:bg-espresso-bg">
                         <img
                           src={imageUrl}
                           alt={p.name}
@@ -146,23 +144,23 @@ export default function MenuYonetimiPage() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                        <span className="text-sm font-semibold text-espresso dark:text-espresso-cream">
                           {p.name}
                         </span>
-                        <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                        <span className="text-[11px] text-espresso/65 dark:text-espresso-muted">
                           {p.category}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-                      <span className="truncate rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-indigo-800 dark:border-indigo-500/30 dark:bg-indigo-950/60 dark:text-indigo-200">
+                    <div className="flex items-center justify-between gap-2 text-xs text-espresso/70 dark:text-espresso-muted">
+                      <span className="truncate rounded-full border border-espresso-latte/40 bg-espresso-latte/10 px-2 py-0.5 text-espresso dark:text-espresso-cream">
                         {p.category}
                       </span>
                       <button
                         type="button"
                         onClick={() => deleteProduct(p.id)}
-                        className="inline-flex items-center gap-1 rounded-full border border-red-300/60 bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-700 transition hover:bg-red-100 dark:border-red-500/40 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-950/60"
+                        className="inline-flex items-center gap-1 rounded-full border border-red-400/50 bg-red-500/10 px-2.5 py-1 text-[11px] font-medium text-red-700 transition hover:bg-red-500/20 dark:border-red-500/40 dark:text-red-300 dark:hover:bg-red-950/40"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                         Sil
@@ -178,4 +176,3 @@ export default function MenuYonetimiPage() {
     </div>
   );
 }
-

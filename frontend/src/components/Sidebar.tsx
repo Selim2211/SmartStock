@@ -96,29 +96,44 @@ const menuItems: {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark" || theme === "dark";
+  const isLight = mounted && !isDark;
+
+  const shell = isLight
+    ? "border-espresso-border bg-[#EDE4D3] text-espresso"
+    : "border-espresso-border bg-espresso-sidebar text-espresso-cream";
+
+  const headerBar = isLight
+    ? "border-espresso-border bg-[#E8DCC8]/95"
+    : "border-espresso-border bg-espresso-sidebar/95";
+
+  const mutedText = isLight ? "text-espresso/70" : "text-espresso-muted";
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 w-72 border-r border-zinc-200 bg-white text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
-      <div className="flex h-16 items-center justify-between gap-2 border-b border-zinc-200 bg-zinc-50/90 px-4 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
+    <aside
+      className={`fixed inset-y-0 left-0 z-40 w-72 border-r ${shell}`}
+    >
+      <div
+        className={`flex h-16 items-center justify-between gap-2 border-b px-4 backdrop-blur ${headerBar}`}
+      >
         <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 shadow-lg shadow-indigo-500/25 dark:bg-indigo-500">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-espresso-latte shadow-lg shadow-black/20">
             <span className="text-lg font-black tracking-tight text-white">
               SS
             </span>
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold tracking-wide text-zinc-900 dark:text-zinc-50">
+            <span className={`text-sm font-semibold tracking-wide ${isLight ? "text-espresso" : "text-espresso-cream"}`}>
               SmartStock
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
+            <span className={`text-[11px] font-medium uppercase tracking-[0.22em] ${mutedText}`}>
               POS &amp; Kafe Yönetimi
             </span>
           </div>
@@ -126,7 +141,11 @@ export function Sidebar() {
         <button
           type="button"
           onClick={() => setTheme(isDark ? "light" : "dark")}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-zinc-300 bg-zinc-100 text-zinc-700 shadow-sm hover:bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+          className={`inline-flex h-8 w-8 items-center justify-center rounded-full border text-sm shadow-sm transition ${
+            isLight
+              ? "border-espresso-border bg-white/80 text-espresso hover:bg-white"
+              : "border-espresso-border bg-espresso-surface text-espresso-cream hover:bg-espresso-surface/80"
+          }`}
           suppressHydrationWarning
         >
           {mounted ? (
@@ -155,58 +174,84 @@ export function Sidebar() {
               href={item.href}
               className={[
                 "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-espresso-latte focus-visible:ring-offset-2",
+                isLight ? "focus-visible:ring-offset-[#EDE4D3]" : "focus-visible:ring-offset-espresso-sidebar",
                 isActive
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 dark:bg-indigo-600"
-                  : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800/80",
+                  ? "bg-espresso-latte text-white shadow-lg shadow-black/25 hover:bg-espresso-latte-dark"
+                  : isLight
+                  ? "text-espresso/90 hover:bg-black/5"
+                  : "text-espresso-cream hover:bg-espresso-surface/80",
               ].join(" ")}
             >
               <span
                 className={[
                   "flex h-8 w-8 items-center justify-center rounded-lg border text-[15px]",
                   isActive
-                    ? "border-white/30 bg-white/15 text-white"
-                    : "border-zinc-200 bg-zinc-100 group-hover:border-indigo-300 dark:border-zinc-700 dark:bg-zinc-800 dark:group-hover:border-indigo-500/50",
+                    ? "border-white/25 bg-white/10 text-white"
+                    : isLight
+                    ? "border-espresso-border/50 bg-white/50 group-hover:border-espresso-latte/40"
+                    : "border-espresso-border bg-espresso-surface/60 group-hover:border-espresso-latte/50",
                 ].join(" ")}
               >
                 <Icon
                   className={
                     isActive
                       ? "h-4 w-4 text-white"
-                      : "h-4 w-4 text-zinc-600 dark:text-zinc-300"
+                      : isLight
+                      ? "h-4 w-4 text-espresso/80"
+                      : "h-4 w-4 text-espresso-cream"
                   }
                 />
               </span>
               <span className="flex-1 text-left">{item.label}</span>
 
               {!isActive && (
-                <span className="h-1.5 w-1.5 rounded-full bg-zinc-300 group-hover:bg-indigo-400 dark:bg-zinc-600" />
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    isLight ? "bg-espresso/25 group-hover:bg-espresso-latte" : "bg-espresso-border group-hover:bg-espresso-latte"
+                  }`}
+                />
               )}
 
               {isActive && (
-                <span className="ml-1 h-7 w-1 rounded-full bg-white/40" />
+                <span className="ml-1 h-7 w-1 rounded-full bg-white/35" />
               )}
             </Link>
           );
         })}
       </nav>
 
-      <div className="mt-auto flex flex-col gap-2 border-t border-zinc-200 px-4 pb-4 pt-3 dark:border-zinc-800">
-        <div className="flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400">
+      <div
+        className={`mt-auto flex flex-col gap-2 border-t px-4 pb-4 pt-3 ${
+          isLight ? "border-espresso-border" : "border-espresso-border"
+        }`}
+      >
+        <div className={`flex items-center justify-between text-[11px] ${mutedText}`}>
           <span className="uppercase tracking-[0.18em]">Aktif Şube</span>
-          <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-[10px] font-medium text-indigo-800 shadow-sm dark:bg-indigo-950 dark:text-indigo-200">
+          <span
+            className={`rounded-full px-2 py-0.5 text-[10px] font-medium shadow-sm ${
+              isLight
+                ? "bg-espresso-latte/15 text-espresso ring-1 ring-espresso-border"
+                : "bg-espresso-surface text-espresso-cream ring-1 ring-espresso-border"
+            }`}
+          >
             Merkez
           </span>
         </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
-          <div className="h-full w-2/3 rounded-full bg-indigo-500" />
+        <div
+          className={`h-1.5 overflow-hidden rounded-full ${
+            isLight ? "bg-espresso-border/40" : "bg-espresso-border"
+          }`}
+        >
+          <div className="h-full w-2/3 rounded-full bg-espresso-latte" />
         </div>
-        <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
+        <p className={`text-[11px] ${mutedText}`}>
           Bugünkü işlemler stabil. Satış yoğunluğu:{" "}
-          <span className="font-semibold text-zinc-900 dark:text-zinc-50">%67</span>
+          <span className={`font-semibold ${isLight ? "text-espresso" : "text-espresso-cream"}`}>
+            %67
+          </span>
         </p>
       </div>
     </aside>
   );
 }
-
