@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from .db import init_db
-from .routers import branches_router, products_router, tables_router
+from .routers import adisyon_router, branches_router, products_router, tables_router
 
 
 @asynccontextmanager
@@ -40,6 +40,7 @@ async def health_check() -> dict[str, str]:
 app.include_router(branches_router)
 app.include_router(products_router)
 app.include_router(tables_router)
+app.include_router(adisyon_router)
 
 os.makedirs("uploads", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")

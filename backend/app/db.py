@@ -86,6 +86,9 @@ async def init_db() -> None:
         sync_conn.exec_driver_sql(
             "ALTER TABLE products DROP COLUMN IF EXISTS supplier;"
         )
+        sync_conn.exec_driver_sql(
+            "ALTER TABLE tables ADD COLUMN IF NOT EXISTS is_occupied BOOLEAN DEFAULT FALSE;"
+        )
 
     max_attempts = 10
     delay_seconds = 2

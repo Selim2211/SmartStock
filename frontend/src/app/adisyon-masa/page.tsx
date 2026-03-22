@@ -1,15 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 export default function AdisyonMasaPage() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/masalar");
+  }, [router]);
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-semibold text-espresso dark:text-espresso-cream">
-        Adisyon / Masa Planı
-      </h1>
-      <p className="text-sm text-espresso/75 dark:text-espresso-muted">
-        Bu modül yapım aşamasındadır.
-      </p>
-    </div>
+    <p className="text-sm text-espresso-muted dark:text-espresso-muted">
+      Yönlendiriliyor…
+    </p>
   );
 }
-

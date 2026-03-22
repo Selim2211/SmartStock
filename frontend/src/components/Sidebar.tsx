@@ -48,7 +48,7 @@ const menuItems: {
     key: "adisyon-masa",
     label: "Adisyon / Masa Planı",
     icon: UtensilsCrossed,
-    href: "/adisyon-masa",
+    href: "/masalar",
   },
   {
     key: "canli-siparisler",
