@@ -19,11 +19,11 @@ export default function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning>
       <body
-        className={`${inter.className} min-h-screen bg-[#F8F5F0] text-[#3E2723] antialiased dark:bg-[#121212] dark:text-[#F8F5F0]`}
+        className={`${inter.className} min-h-screen bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-50`}
       >
         <ThemeProvider>
           <Sidebar />
-          <main className="ml-72 min-h-screen bg-[#F8F5F0] dark:bg-[#121212]">
+          <main className="ml-72 min-h-screen bg-zinc-50 dark:bg-zinc-950">
             <div className="mx-auto max-w-6xl px-8 py-8">{children}</div>
           </main>
         </ThemeProvider>

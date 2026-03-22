@@ -63,10 +63,10 @@ export default function MenuYonetimiPage() {
     <div className="space-y-8">
       <header className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-[#3C2F2F]">
+          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
             Menü Yönetimi
           </h1>
-          <p className="mt-1 text-sm text-[#7A6A5A]">
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
             Sisteme eklenmiş tüm ürünleri, görselleriyle birlikte görüntüleyin.
           </p>
         </div>
@@ -80,30 +80,30 @@ export default function MenuYonetimiPage() {
 
 
       {/* Ürün Listesi - Görselli Grid */}
-      <section className="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-[0_0_35px_rgba(0,0,0,0.6)]">
+      <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:shadow-[0_0_35px_rgba(0,0,0,0.4)]">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-[#3C2F2F]">
+            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
               Menüdeki Ürünler
             </h2>
-            <p className="mt-1 text-xs text-[#7A6A5A]">
+            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
               Aşağıda, veritabanında kayıtlı olan ürünler görüntülenmektedir.
             </p>
           </div>
-          <span className="rounded-full bg-white px-3 py-1 text-xs text-[#7A6A5A] ring-1 ring-stone-200">
+          <span className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-600 ring-1 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:ring-zinc-700">
             Toplam ürün:{" "}
-            <span className="font-semibold text-[#3C2F2F]">
+            <span className="font-semibold text-zinc-900 dark:text-zinc-50">
               {products.length}
             </span>
           </span>
         </div>
 
         {loading ? (
-          <div className="px-4 py-6 text-sm text-zinc-400">
+          <div className="px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400">
             Ürünler yükleniyor...
           </div>
         ) : products.length === 0 ? (
-          <div className="px-4 py-6 text-sm text-zinc-400">
+          <div className="px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400">
             Henüz kayıtlı ürün yok. Yeni ürün ekleyerek menünüzü oluşturun.
           </div>
         ) : (
@@ -118,9 +118,9 @@ export default function MenuYonetimiPage() {
               return (
                 <article
                   key={p.id}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] transition hover:border-[#C17F59]/70 hover:shadow-[0_18px_40px_rgba(148,92,60,0.25)]"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-md transition hover:border-indigo-400/50 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-500/40"
                 >
-                  <div className="relative h-32 w-full overflow-hidden bg-stone-100">
+                  <div className="relative h-32 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                     <img
                       src={imageUrl}
                       alt={p.name}
@@ -131,14 +131,14 @@ export default function MenuYonetimiPage() {
                       <span className="truncate font-medium drop-shadow-sm">
                         {p.name}
                       </span>
-                      <span className="rounded-full bg-black/65 px-2 py-0.5 text-[11px] text-[#F9E3D4]">
+                      <span className="rounded-full bg-black/70 px-2 py-0.5 text-[11px] text-white">
                         {p.price.toFixed(2)} ₺
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-1 flex-col gap-3 p-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 overflow-hidden rounded-full border border-stone-200 bg-stone-100">
+                      <div className="h-10 w-10 overflow-hidden rounded-full border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
                         <img
                           src={imageUrl}
                           alt={p.name}
@@ -146,23 +146,23 @@ export default function MenuYonetimiPage() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-sm font-semibold text-[#3C2F2F]">
+                        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
                           {p.name}
                         </span>
-                        <span className="text-[11px] text-[#7A6A5A]">
+                        <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
                           {p.category}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-2 text-xs text-[#7A6A5A]">
-                      <span className="truncate rounded-full bg-[#F4ECE2] px-2 py-0.5">
+                    <div className="flex items-center justify-between gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                      <span className="truncate rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-indigo-800 dark:border-indigo-500/30 dark:bg-indigo-950/60 dark:text-indigo-200">
                         {p.category}
                       </span>
                       <button
                         type="button"
                         onClick={() => deleteProduct(p.id)}
-                        className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-700 transition hover:bg-red-100 hover:border-red-300"
+                        className="inline-flex items-center gap-1 rounded-full border border-red-300/60 bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-700 transition hover:bg-red-100 dark:border-red-500/40 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-950/60"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                         Sil

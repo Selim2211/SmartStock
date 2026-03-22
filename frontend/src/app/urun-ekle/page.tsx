@@ -87,10 +87,10 @@ export default function UrunEklePage() {
     <div className="space-y-8">
       <header className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-50">
+          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
             Yeni Ürün Ekle
           </h1>
-          <p className="mt-1 text-sm text-zinc-400">
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
             Ürünün tüm detaylarını ve isteğe bağlı görselini ekleyerek menünüze
             kaydedin.
           </p>
@@ -120,7 +120,7 @@ export default function UrunEklePage() {
               <h2 className="text-lg font-semibold text-zinc-50">
                 Ürün Bilgileri
               </h2>
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
                 Fiyat, stok ve kritik seviye alanları lojistik ve raporlama
                 için kullanılır.
               </p>
@@ -138,7 +138,7 @@ export default function UrunEklePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Örn: Flat White, Tiramisu, Cold Brew..."
-                className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-amber-400 focus:ring-2 focus:ring-amber-500/60"
+                className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50"
               />
             </div>
 
@@ -150,7 +150,7 @@ export default function UrunEklePage() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-amber-400 focus:ring-2 focus:ring-amber-500/60"
+                className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50"
               >
                 <option value="">Kategori seçin</option>
                 {categories.map((c) => (
@@ -166,7 +166,7 @@ export default function UrunEklePage() {
               <label className="text-xs font-medium uppercase tracking-[0.16em] text-zinc-400">
                 Fiyat (₺)
               </label>
-              <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 shadow-inner shadow-black/40 focus-within:border-amber-400 focus-within:ring-2 focus-within:ring-amber-500/60">
+              <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 shadow-inner shadow-black/40 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/50">
                 <input
                   type="number"
                   min={0}
@@ -189,7 +189,7 @@ export default function UrunEklePage() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_0_22px_rgba(245,158,11,0.8)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
             >
               {submitting ? "Kaydediliyor..." : "Ürünü Kaydet"}
             </button>
@@ -202,7 +202,7 @@ export default function UrunEklePage() {
             <h2 className="text-lg font-semibold text-zinc-50">
               Ürün Görseli
             </h2>
-            <p className="mt-1 text-xs text-zinc-500">
+            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
               Ürün kartlarında gösterilecek görseli URL olarak ekleyebilir veya
               daha sonra da güncelleyebilirsiniz.
             </p>
@@ -216,8 +216,8 @@ export default function UrunEklePage() {
               {...getRootProps({
                 className: `flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-4 py-8 transition ${
                   isDragActive
-                    ? "border-amber-400 bg-zinc-900/60"
-                    : "border-zinc-700 bg-zinc-900/40 hover:border-amber-400 hover:bg-zinc-900/60"
+                    ? "border-indigo-500 bg-zinc-900/60"
+                    : "border-zinc-700 bg-zinc-900/40 hover:border-indigo-500/70 hover:bg-zinc-900/60"
                 }`,
               })}
             >
@@ -227,7 +227,7 @@ export default function UrunEklePage() {
               </div>
               <p className="text-xs text-zinc-300">
                 Fotoğrafı buraya sürükleyin veya{" "}
-                <span className="font-semibold text-amber-300">
+                <span className="font-semibold text-indigo-400">
                   tıklayarak seçin
                 </span>
                 .

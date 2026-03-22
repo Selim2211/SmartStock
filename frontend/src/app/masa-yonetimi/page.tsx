@@ -100,10 +100,10 @@ export default function MasaYonetimiPage() {
     <div className="space-y-8">
       <header className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-50">
+          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
             Masa Yönetimi
           </h1>
-          <p className="mt-1 text-sm text-zinc-400">
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
             Salon, bahçe ve teras masalarını tek ekran üzerinden yönetin.
           </p>
         </div>
@@ -128,7 +128,7 @@ export default function MasaYonetimiPage() {
             <h2 className="text-lg font-semibold text-zinc-50">
               Yeni Masa Ekle
             </h2>
-            <p className="mt-1 text-xs text-zinc-500">
+            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
               Bahçe, salon veya terastaki masalarınızı isimlendirerek kapasite
               bilgileriyle birlikte kaydedin.
             </p>
@@ -149,7 +149,7 @@ export default function MasaYonetimiPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Örn: Bahçe-1, Salon-5"
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-amber-400 focus:ring-2 focus:ring-amber-500/60"
+              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50"
             />
           </div>
 
@@ -165,7 +165,7 @@ export default function MasaYonetimiPage() {
               onChange={(e) =>
                 setCapacity(e.target.value === "" ? "" : Number(e.target.value))
               }
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-amber-400 focus:ring-2 focus:ring-amber-500/60"
+              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 shadow-inner shadow-black/40 outline-none ring-0 transition hover:border-zinc-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50"
               placeholder="Örn: 4"
             />
           </div>
@@ -175,7 +175,7 @@ export default function MasaYonetimiPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 px-5 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_0_22px_rgba(245,158,11,0.8)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
             >
               {submitting ? "Kaydediliyor..." : "Masayı Kaydet"}
             </button>
@@ -190,7 +190,7 @@ export default function MasaYonetimiPage() {
             <h2 className="text-lg font-semibold text-zinc-50">
               Mevcut Masalar
             </h2>
-            <p className="mt-1 text-xs text-zinc-500">
+            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
               Masalara hızlıca durum atayın, düzenleyin veya sistemden kaldırın.
             </p>
           </div>
@@ -225,16 +225,16 @@ export default function MasaYonetimiPage() {
               return (
                 <article
                   key={table.id}
-                  className="group flex flex-col justify-between rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-950 via-zinc-950/90 to-zinc-900/80 p-4 shadow-[0_0_28px_rgba(0,0,0,0.7)] transition hover:border-amber-500/60 hover:shadow-[0_0_40px_rgba(245,158,11,0.35)]"
+                  className="group flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/90 p-4 shadow-lg transition hover:border-indigo-500/50 hover:shadow-indigo-500/10"
                 >
                   <header className="mb-4 flex items-start justify-between gap-3">
                     <div>
                       <h3 className="text-sm font-semibold text-zinc-50">
                         {table.name}
                       </h3>
-                      <p className="mt-0.5 text-xs text-zinc-500">
+                      <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
                         Kapasite:{" "}
-                        <span className="font-medium text-zinc-200">
+                        <span className="font-medium text-zinc-200 dark:text-zinc-300">
                           {table.capacity} kişi
                         </span>
                       </p>
@@ -250,7 +250,7 @@ export default function MasaYonetimiPage() {
                     <div className="flex gap-2">
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-xl border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-[11px] font-medium text-zinc-100 transition hover:border-amber-500/70 hover:bg-zinc-900 hover:text-amber-200"
+                        className="inline-flex items-center rounded-xl border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-[11px] font-medium text-zinc-100 transition hover:border-indigo-500/60 hover:bg-zinc-800 hover:text-indigo-200"
                       >
                         Düzenle
                       </button>
