@@ -23,7 +23,7 @@ export default function MasaYonetimiPage() {
   async function fetchTables() {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/masalar/`);
+      const res = await fetch(`${API_URL}/masalar`);
       if (!res.ok) {
         throw new Error("Masalar alınırken hata oluştu");
       }
@@ -58,7 +58,7 @@ export default function MasaYonetimiPage() {
 
     try {
       setSubmitting(true);
-      const res = await fetch(`${API_URL}/masalar/`, {
+      const res = await fetch(`${API_URL}/masalar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

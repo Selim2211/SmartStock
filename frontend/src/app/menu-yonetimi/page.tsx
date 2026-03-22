@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
-import { API_ORIGIN, API_URL } from "@/lib/api";
+import { API_ORIGIN, API_URL, ensureHttpsUnlessLocal } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -20,7 +20,7 @@ export default function MenuYonetimiPage() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/urunler/`);
+      const res = await fetch(`${API_URL}/urunler`);
       if (!res.ok) {
         throw new Error("Ürün listesi alınırken hata oluştu");
       }
@@ -110,8 +110,9 @@ export default function MenuYonetimiPage() {
               const rawUrl =
                 p.gorsel_url ||
                 "https://images.pexels.com/photos/18602050/pexels-photo-18602050/free-photo-of-yemek-masa-icmek-kahve.jpeg?auto=compress&cs=tinysrgb&w=400";
-              const imageUrl =
-                rawUrl.startsWith("http") ? rawUrl : `${API_ORIGIN}${rawUrl}`;
+              const imageUrl = ensureHttpsUnlessLocal(
+                rawUrl.startsWith("http") ? rawUrl : `${API_ORIGIN}${rawUrl}`
+              );
 
               return (
                 <article

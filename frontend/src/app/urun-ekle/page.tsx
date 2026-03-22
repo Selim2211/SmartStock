@@ -64,7 +64,7 @@ export default function UrunEklePage() {
         formData.append("gorsel", file);
       }
 
-      const res = await fetch(`${API_URL}/urunler/`, {
+      const res = await fetch(`${API_URL}/urunler`, {
         method: "POST",
         body: formData,
       });

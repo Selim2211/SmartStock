@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { API_ORIGIN, API_URL } from "@/lib/api";
+import { API_ORIGIN, API_URL, ensureHttpsUnlessLocal } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -24,7 +24,10 @@ const DEFAULT_IMAGE =
 
 function getImageUrl(gorselUrl: string | null | undefined): string {
   if (!gorselUrl) return DEFAULT_IMAGE;
-  return gorselUrl.startsWith("http") ? gorselUrl : `${API_ORIGIN}${gorselUrl}`;
+  const abs = gorselUrl.startsWith("http")
+    ? gorselUrl
+    : `${API_ORIGIN}${gorselUrl}`;
+  return ensureHttpsUnlessLocal(abs);
 }
 
 export default function HizliSatisPage() {
@@ -36,7 +39,7 @@ export default function HizliSatisPage() {
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/urunler/`);
+      const res = await fetch(`${API_URL}/urunler`);
       if (!res.ok) throw new Error("Ürünler yüklenemedi.");
       const data = (await res.json()) as Product[];
       setProducts(data);

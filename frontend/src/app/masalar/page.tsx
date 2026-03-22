@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { API_ORIGIN, API_URL } from "@/lib/api";
+import { API_ORIGIN, API_URL, ensureHttpsUnlessLocal } from "@/lib/api";
 
 type OrderItemLine = {
   id: number;
@@ -33,7 +33,8 @@ function productImageUrl(p: Product): string {
   const raw =
     p.gorsel_url ||
     "https://images.pexels.com/photos/18602050/pexels-photo-18602050/free-photo-of-yemek-masa-icmek-kahve.jpeg?auto=compress&cs=tinysrgb&w=200";
-  return raw.startsWith("http") ? raw : `${API_ORIGIN}${raw}`;
+  const abs = raw.startsWith("http") ? raw : `${API_ORIGIN}${raw}`;
+  return ensureHttpsUnlessLocal(abs);
 }
 
 export default function MasalarPage() {
@@ -49,7 +50,7 @@ export default function MasalarPage() {
       setError(null);
       const [tRes, pRes] = await Promise.all([
         fetch(`${API_URL}/tables`),
-        fetch(`${API_URL}/urunler/`),
+        fetch(`${API_URL}/urunler`),
       ]);
       if (!tRes.ok) throw new Error("Masalar yüklenemedi.");
       if (!pRes.ok) throw new Error("Ürünler yüklenemedi.");
