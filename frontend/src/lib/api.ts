@@ -18,6 +18,10 @@ function normalizeApiBase(url: string): string {
       u = `https://${u.slice("http://".length)}`;
     }
   }
+  // Son emniyet: Railway host'ları asla http kalmasın (Vercel env typo)
+  if (u.includes("up.railway.app") && u.startsWith("http://")) {
+    u = `https://${u.slice("http://".length)}`;
+  }
   return u;
 }
 
