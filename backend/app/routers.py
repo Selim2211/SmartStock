@@ -5,6 +5,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from . import models, schemas
 from .db import get_db
+from .paths import UPLOADS_DIR
 
 DEFAULT_COMPANY_ID = "demo-company"
 
@@ -74,9 +75,8 @@ async def create_product(
 
         ext = os.path.splitext(gorsel.filename or "")[1] or ".jpg"
         filename = f"{uuid4().hex}{ext}"
-        upload_dir = "uploads"
-        os.makedirs(upload_dir, exist_ok=True)
-        dest_path = os.path.join(upload_dir, filename)
+        os.makedirs(UPLOADS_DIR, exist_ok=True)
+        dest_path = os.path.join(UPLOADS_DIR, filename)
         content = await gorsel.read()
         with open(dest_path, "wb") as f:
             f.write(content)

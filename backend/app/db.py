@@ -72,8 +72,12 @@ async def init_db() -> None:
     Uygulama ayağa kalkarken modellerin tablolarını oluşturur.
     DB henüz hazır değilse birkaç kez yeniden dener (örn. Railway cold start).
     Production için alembic migration tercih edilmelidir.
+
+    ÖNEMLİ: SQLAlchemy tabloları yalnızca import edilen model sınıfları için
+    üretilir. Aşağıdaki sınıfların tamamı Base.metadata'ya kayıt olmalıdır.
     """
-    from . import models  # noqa: F401
+    # Tüm ORM modelleri — import edilmeyen tablo create_all ile oluşmaz
+    from .models import Branch, OrderItem, Product, Table  # noqa: F401
 
     def run_migrations(sync_conn) -> None:
         # Eski lojistik alanlarını kaldır
