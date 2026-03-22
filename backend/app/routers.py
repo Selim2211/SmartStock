@@ -16,7 +16,7 @@ tables_router = APIRouter(prefix="/api/masalar", tags=["tables"])
 adisyon_router = APIRouter(prefix="/api/tables", tags=["adisyon"])
 
 
-@branches_router.get("/", response_model=list[schemas.Branch])
+@branches_router.get("", response_model=list[schemas.Branch])
 async def list_branches(
     db: AsyncSession = Depends(get_db),
 ) -> list[schemas.Branch]:
@@ -25,7 +25,7 @@ async def list_branches(
 
 
 @branches_router.post(
-    "/", response_model=schemas.Branch, status_code=status.HTTP_201_CREATED
+    "", response_model=schemas.Branch, status_code=status.HTTP_201_CREATED
 )
 async def create_branch(
     payload: schemas.BranchCreate, db: AsyncSession = Depends(get_db)
@@ -46,7 +46,7 @@ async def create_branch(
     return branch
 
 
-@products_router.get("/", response_model=list[schemas.Product])
+@products_router.get("", response_model=list[schemas.Product])
 async def list_products(
     db: AsyncSession = Depends(get_db),
 ) -> list[schemas.Product]:
@@ -59,7 +59,7 @@ async def list_products(
 
 
 @products_router.post(
-    "/", response_model=schemas.Product, status_code=status.HTTP_201_CREATED
+    "", response_model=schemas.Product, status_code=status.HTTP_201_CREATED
 )
 async def create_product(
     name: str = Form(...),
@@ -119,7 +119,7 @@ async def delete_product(
     return {"detail": "Ürün başarıyla silindi."}
 
 
-@tables_router.get("/", response_model=list[schemas.Table])
+@tables_router.get("", response_model=list[schemas.Table])
 async def list_tables(
     db: AsyncSession = Depends(get_db),
 ) -> list[schemas.Table]:
@@ -132,7 +132,7 @@ async def list_tables(
 
 
 @tables_router.post(
-    "/", response_model=schemas.Table, status_code=status.HTTP_201_CREATED
+    "", response_model=schemas.Table, status_code=status.HTTP_201_CREATED
 )
 async def create_table(
     payload: schemas.TableCreate, db: AsyncSession = Depends(get_db)
@@ -219,7 +219,7 @@ async def _build_table_response(
     )
 
 
-@adisyon_router.get("/", response_model=list[schemas.TableResponse])
+@adisyon_router.get("", response_model=list[schemas.TableResponse])
 async def list_tables_pos(
     db: AsyncSession = Depends(get_db),
 ) -> list[schemas.TableResponse]:
