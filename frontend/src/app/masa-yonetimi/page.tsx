@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { API_URL } from "@/lib/api";
 
 type Table = {
   id: number;
@@ -8,9 +9,6 @@ type Table = {
   capacity: number;
   status: string;
 };
-
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000";
 
 export default function MasaYonetimiPage() {
   const [tables, setTables] = useState<Table[]>([]);
@@ -25,7 +23,7 @@ export default function MasaYonetimiPage() {
   async function fetchTables() {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE}/api/masalar/`);
+      const res = await fetch(`${API_URL}/masalar/`);
       if (!res.ok) {
         throw new Error("Masalar alınırken hata oluştu");
       }
@@ -60,7 +58,7 @@ export default function MasaYonetimiPage() {
 
     try {
       setSubmitting(true);
-      const res = await fetch(`${API_BASE}/api/masalar/`, {
+      const res = await fetch(`${API_URL}/masalar/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

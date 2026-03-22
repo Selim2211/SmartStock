@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { API_ORIGIN, API_URL } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -18,15 +19,12 @@ type CartItem = {
   quantity: number;
 };
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000";
-
 const DEFAULT_IMAGE =
   "https://images.pexels.com/photos/18602050/pexels-photo-18602050/free-photo-of-yemek-masa-icmek-kahve.jpeg?auto=compress&cs=tinysrgb&w=400";
 
 function getImageUrl(gorselUrl: string | null | undefined): string {
   if (!gorselUrl) return DEFAULT_IMAGE;
-  return gorselUrl.startsWith("http") ? gorselUrl : `${API_BASE}${gorselUrl}`;
+  return gorselUrl.startsWith("http") ? gorselUrl : `${API_ORIGIN}${gorselUrl}`;
 }
 
 export default function HizliSatisPage() {
@@ -38,7 +36,7 @@ export default function HizliSatisPage() {
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE}/api/urunler/`);
+      const res = await fetch(`${API_URL}/urunler/`);
       if (!res.ok) throw new Error("Ürünler yüklenemedi.");
       const data = (await res.json()) as Product[];
       setProducts(data);

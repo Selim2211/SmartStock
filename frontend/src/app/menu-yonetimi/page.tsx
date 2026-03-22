@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
+import { API_ORIGIN, API_URL } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -11,9 +12,6 @@ type Product = {
   gorsel_url?: string | null;
 };
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000";
-
 export default function MenuYonetimiPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +20,7 @@ export default function MenuYonetimiPage() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE}/api/urunler/`);
+      const res = await fetch(`${API_URL}/urunler/`);
       if (!res.ok) {
         throw new Error("Ürün listesi alınırken hata oluştu");
       }
@@ -43,7 +41,7 @@ export default function MenuYonetimiPage() {
   async function deleteProduct(id: number) {
     try {
       setError(null);
-      const res = await fetch(`${API_BASE}/api/urunler/${id}`, {
+      const res = await fetch(`${API_URL}/urunler/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) {
@@ -115,7 +113,7 @@ export default function MenuYonetimiPage() {
                 p.gorsel_url ||
                 "https://images.pexels.com/photos/18602050/pexels-photo-18602050/free-photo-of-yemek-masa-icmek-kahve.jpeg?auto=compress&cs=tinysrgb&w=400";
               const imageUrl =
-                rawUrl.startsWith("http") ? rawUrl : `${API_BASE}${rawUrl}`;
+                rawUrl.startsWith("http") ? rawUrl : `${API_ORIGIN}${rawUrl}`;
 
               return (
                 <article

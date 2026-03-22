@@ -1,10 +1,8 @@
- "use client";
+"use client";
 
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000";
+import { API_URL } from "@/lib/api";
 
 const categories = ["Kahveler", "Tatlılar", "Sandviçler", "Soğuk İçecekler"];
 
@@ -60,7 +58,7 @@ export default function UrunEklePage() {
         formData.append("gorsel", file);
       }
 
-      const res = await fetch(`${API_BASE}/api/urunler/`, {
+      const res = await fetch(`${API_URL}/urunler/`, {
         method: "POST",
         body: formData,
       });
