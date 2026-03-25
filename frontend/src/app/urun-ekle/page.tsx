@@ -115,8 +115,11 @@ export default function UrunEklePage() {
         </div>
       )}
 
-      <section className="grid gap-6 lg:grid-cols-[minmax(0,2fr),minmax(0,1.4fr)]">
-        <form className={cardShell} onSubmit={handleSubmit}>
+      <section className="flex flex-col gap-6 lg:flex-row lg:items-start">
+        <form
+          className={`${cardShell} flex w-full flex-col lg:w-2/3`}
+          onSubmit={handleSubmit}
+        >
           <div className="mb-6 flex items-center justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
@@ -128,8 +131,8 @@ export default function UrunEklePage() {
             </div>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <div className="space-y-1.5 md:col-span-2">
+          <div className="grid gap-5">
+            <div className="space-y-1.5">
               <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
                 Ürün Adı
               </label>
@@ -142,59 +145,65 @@ export default function UrunEklePage() {
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
-                Kategori
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className={inputClass}
-              >
-                <option value="">Kategori seçin</option>
-                {categories.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* Kategori + Fiyat: mobilde alt alta, md+ yan yana */}
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
+                  Kategori
+                </label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className={inputClass}
+                >
+                  <option value="">Kategori seçin</option>
+                  {categories.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
-                Fiyat (₺)
-              </label>
-              <div className="flex items-center gap-2 rounded-xl border border-espresso-border bg-white/90 px-3 py-2.5 shadow-inner focus-within:border-espresso-latte focus-within:ring-2 focus-within:ring-espresso-latte/40 dark:bg-espresso-bg/80">
-                <input
-                  type="number"
-                  min={0}
-                  step="0.5"
-                  value={price}
-                  onChange={(e) =>
-                    setPrice(e.target.value === "" ? "" : Number(e.target.value))
-                  }
-                  className="w-full bg-transparent text-sm text-espresso outline-none dark:text-espresso-cream"
-                  placeholder="Örn: 85"
-                />
-                <span className="text-xs font-medium text-espresso/50 dark:text-espresso-muted">
-                  ₺
-                </span>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium uppercase tracking-[0.16em] text-espresso/60 dark:text-espresso-muted">
+                  Fiyat (₺)
+                </label>
+                <div className="flex items-center gap-2 rounded-xl border border-espresso-border bg-white/90 px-3 py-2.5 shadow-inner focus-within:border-espresso-latte focus-within:ring-2 focus-within:ring-espresso-latte/40 dark:bg-espresso-bg/80">
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.5"
+                    value={price}
+                    onChange={(e) =>
+                      setPrice(
+                        e.target.value === "" ? "" : Number(e.target.value)
+                      )
+                    }
+                    className="w-full bg-transparent text-sm text-espresso outline-none dark:text-espresso-cream"
+                    placeholder="Örn: 85"
+                  />
+                  <span className="text-xs font-medium text-espresso/50 dark:text-espresso-muted">
+                    ₺
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end">
+          {/* Buton formun en altında, sağa yaslı (desktop) */}
+          <div className="mt-6 flex w-full justify-end">
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-xl bg-espresso-latte px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 transition hover:bg-espresso-latte-dark disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-espresso-latte focus-visible:ring-offset-2 focus-visible:ring-offset-[#f8f3ea] dark:focus-visible:ring-offset-espresso-surface"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-espresso-latte px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 transition hover:bg-espresso-latte-dark disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-espresso-latte focus-visible:ring-offset-2 focus-visible:ring-offset-[#f8f3ea] dark:focus-visible:ring-offset-espresso-surface"
             >
               {submitting ? "Kaydediliyor..." : "Ürünü Kaydet"}
             </button>
           </div>
         </form>
 
-        <section className={`flex flex-col gap-4 ${cardShell}`}>
+        <section className={`flex w-full flex-col gap-4 ${cardShell} lg:w-1/3`}>
           <div>
             <h2 className="text-lg font-semibold text-espresso dark:text-espresso-cream">
               Ürün Görseli
@@ -235,7 +244,7 @@ export default function UrunEklePage() {
             </div>
           </div>
 
-          <div className="mt-2 flex-1 rounded-2xl border border-dashed border-espresso-border bg-white/50 p-4 dark:bg-espresso-bg/60">
+          <div className="mt-2 rounded-2xl border border-dashed border-espresso-border bg-white/50 p-4 dark:bg-espresso-bg/60">
             {previewUrl ? (
               <div className="flex h-full flex-col gap-3">
                 <div className="relative h-40 w-full overflow-hidden rounded-xl bg-espresso-bg">
