@@ -23,7 +23,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           {/* Önce içerik: mobilde drawer/backdrop DOM’da sonra geldiği için üstte boyanır (sıkışık şerit bug’ı). */}
-          <main className="relative w-full min-w-0 min-h-screen min-h-[100dvh] bg-espresso pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-14 lg:ml-72 lg:pb-8 lg:pt-0">
+          <main className="relative w-full min-w-0 min-h-screen min-h-[100dvh] bg-espresso pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-14 lg:ml-80 lg:pb-8 lg:pt-0">
             <div className="mx-auto max-w-6xl px-4 py-5 sm:px-5 sm:py-6 lg:px-8 lg:py-8">
               {children}
             </div>
