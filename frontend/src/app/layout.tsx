@@ -18,17 +18,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" suppressHydrationWarning>
-      <body
-        className={`${inter.className} min-h-screen overflow-x-hidden bg-espresso text-espresso-cream antialiased`}
-      >
+      <body className={`${inter.className} overflow-x-hidden antialiased`}>
         <ThemeProvider>
-          {/* Önce içerik: mobilde drawer/backdrop DOM’da sonra geldiği için üstte boyanır (sıkışık şerit bug’ı). */}
-          <main className="relative w-full min-w-0 min-h-screen min-h-[100dvh] bg-espresso pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-14 lg:ml-80 lg:pb-8 lg:pt-0">
-            <div className="mx-auto max-w-6xl px-4 py-5 sm:px-5 sm:py-6 lg:px-8 lg:py-8">
-              {children}
-            </div>
-          </main>
-          <Sidebar />
+          {/* Root wrapper (kritik): overflow-x kapalı + main içeriği scroll etsin */}
+          <div className="flex h-screen w-full overflow-hidden bg-[#FAFAF9] dark:bg-espresso text-espresso-cream">
+            <Sidebar />
+            <main className="flex-1 flex flex-col min-w-0 overflow-y-auto overflow-x-hidden pt-14 lg:pt-0">
+              <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-5 sm:py-6 lg:px-8 lg:py-8">
+                {children}
+              </div>
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
